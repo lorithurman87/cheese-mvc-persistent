@@ -34,7 +34,7 @@ public class CheeseController {
 
         model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "My Cheeses");
-        model.addAttribute("categories", CategoryDao.findAll());
+        //model.addAttribute("categories", CategoryDao.findAll());
 
         return "cheese/index";
     }
@@ -50,14 +50,14 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
                                        Errors errors, @RequestParam int categoryId, Model model) {
-        Category cat = CategoryDao.findOne(categoryId);
-        newCheese.setCategory(cat);
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
-            model.addAttribute("categories", CategoryDao.findAll());
+            //model.addAttribute("categories", CategoryDao.findAll());
             return "cheese/add";
         }
+        Category cat = CategoryDao.findOne(categoryId);
+        newCheese.setCategory(cat);
 
         cheeseDao.save(newCheese);
         return "redirect:";
