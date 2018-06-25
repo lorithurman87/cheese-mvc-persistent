@@ -50,13 +50,13 @@ public class MenuController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Menu");
             return "menu/add";
+        } else {
+            menuDao.save(menu);
         }
-
-        menuDao.save(menu);
         return "redirect:view/" + menu.getId();
     }
     @RequestMapping(value = "view/{menuId}", method = RequestMethod.GET)
-            public String viewMenu(@PathVariable int menuId, Model model) {
+    public String viewMenu(@PathVariable int menuId, Model model) {
         Menu menu = menuDao.findOne(menuId);
         model.addAttribute("Title", menu.getName());
         model.addAttribute("cheeses", menu.getCheese());
@@ -72,9 +72,11 @@ public class MenuController {
         model.addAttribute("title", "Add item to menu: " + currentMenu.getName());
         return "menu/add-item";
     }
-    @RequestMapping(value = "add-item", method = RequestMethod.POST)
-    public String addItem (Model model, @ModelAttribute  @Valid AddMenuItemForm form,
-                           Errors errors) {
+
+
+    @RequestMapping(value = "add-item/{cheeseId}", method = RequestMethod.POST)
+    public String addItem (@ModelAttribute  @Valid AddMenuItemForm form,
+                           Model model, Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("form", form);
@@ -88,5 +90,4 @@ public class MenuController {
 
         return "redirect:/menu/view/" + theMenu.getId();
     }
-
 }

@@ -34,7 +34,6 @@ public class Menu {
         this.name = name;
     }
 
-
     public String getName() {
         return name;
     }
@@ -47,11 +46,7 @@ public class Menu {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public List<org.launchcode.models.Cheese> getCheese() {
+    public List<Cheese> getCheese() {
         return cheeses;
     }
 }
